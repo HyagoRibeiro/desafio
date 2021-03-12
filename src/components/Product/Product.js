@@ -16,10 +16,6 @@ function Product({ product, currency, photo }) {
     dispatch({ type: "ADD_PRODUCT", item });
   };
 
-  const removeToCart = (item) => {
-    dispatch({ type: "REMOVE_PRODUCT", item });
-  };
-
   return (
     <div>
       <ContainerProduct>
@@ -33,9 +29,6 @@ function Product({ product, currency, photo }) {
         </p>
         <button type="button" onClick={() => addToCart(product)}>
           Comprar
-        </button>
-        <button type="button" onClick={() => removeToCart(product)}>
-          Remover
         </button>
       </ContainerProduct>
     </div>
