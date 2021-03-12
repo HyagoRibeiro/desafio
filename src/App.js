@@ -8,18 +8,39 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState({});
   const [filter, setFilter] = useState("allProducts");
-  const [itemsFilter, setItemsFilter] = useState(data.products);
+  const [filterCheckBox, setFilterCheckBox] = useState({});
 
   const filterItems = useMemo(() => {
     let newArrayItems = data?.products;
-    console.log("dentro da função", newArrayItems);
     if (filter === "hasStock") {
-      return (newArrayItems = newArrayItems?.filter(
-        (element) => element.hasStock
-      ));
+      newArrayItems = newArrayItems?.filter((element) => element.hasStock);
     }
+
+    if (filterCheckBox.allValue) {
+      newArrayItems = newArrayItems?.filter((element) => element.price);
+    }
+
+    if (filterCheckBox.toFifty) {
+      newArrayItems = newArrayItems?.filter((element) => element.price <= 50);
+    }
+
+    if (filterCheckBox.fromHundred) {
+      newArrayItems = newArrayItems?.filter((element) => element.price >= 100);
+    }
+
     return newArrayItems;
-  }, [filter, data]);
+  }, [filter, data, filterCheckBox]);
+
+  const handleInputChange = ({ target }) => {
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    const name = target.name;
+
+    console.log("target", target);
+
+    setFilterCheckBox({
+      [name]: value,
+    });
+  };
 
   useEffect(() => {
     fetch("https://www.trinto.com.br/testes/frontendjr/index.php")
@@ -38,6 +59,33 @@ function App() {
 
   return (
     <Container>
+      <label>
+        <input
+          name="allValue"
+          type="checkbox"
+          checked={filterCheckBox.allValue}
+          onChange={handleInputChange}
+        />
+        Todos valores
+      </label>
+      <label>
+        <input
+          name="toFifty"
+          type="checkbox"
+          checked={filterCheckBox.toFifty}
+          onChange={handleInputChange}
+        />
+        Até 50,00
+      </label>
+      <label>
+        <input
+          name="fromHundred"
+          type="checkbox"
+          checked={filterCheckBox.fromHundred}
+          onChange={handleInputChange}
+        />
+        A partir de 100,00
+      </label>
       <select value={filter} onChange={({ target }) => setFilter(target.value)}>
         <option value="allProducts">Todos os produtos</option>
         <option value="hasStock">Produtos em estoque</option>
@@ -49,7 +97,9 @@ function App() {
           "FILTER",
           filter,
           "items filtrados",
-          filterItems
+          filterItems,
+          "CHECK",
+          filterCheckBox
         )}
         {!loading &&
           filterItems?.map((item) => {
