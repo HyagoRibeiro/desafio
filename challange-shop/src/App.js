@@ -28,7 +28,9 @@ function App() {
   return (
     <Container>
       <ContainerData>
-        {console.log(data)}
+        {!loading && filterItems.map(item => {
+          return <Product product={item} photo='https://picsum.photos/400' currency={data.currency} />
+        })}
       </ContainerData>
     </Container>
   );
