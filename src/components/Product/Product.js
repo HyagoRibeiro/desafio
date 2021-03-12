@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { ProductImage, ContainerProduct } from "./style";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 function Product({ product, currency, photo }) {
   const dispatch = useDispatch();
+
+  const products = useSelector((state) => state.data);
 
   const treatedData = {
     brand: product.brand ?? "-",
@@ -14,12 +17,12 @@ function Product({ product, currency, photo }) {
 
   const addToCart = (item) => {
     dispatch({ type: "ADD_PRODUCT", item });
+    localStorage.setItem("productsList", JSON.stringify([...products, item]));
   };
 
   return (
     <div>
       <ContainerProduct>
-        {console.log(treatedData.hasStock)}
         <ProductImage src={photo} />
         <p>{treatedData.name}</p>
         <p>{treatedData.brand}</p>

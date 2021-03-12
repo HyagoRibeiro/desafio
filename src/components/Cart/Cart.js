@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 import ProductCart from "../ProductCart/ProductCart.js";
@@ -10,10 +10,10 @@ function Cart() {
 
   const totalPrice = useMemo(() => {
     let price = 0;
-    // prettier-ignore
-    products.map((product) => (price += product.price));
+    products.map((product) => (price += product?.price));
     return price;
   }, [products]);
+
   return (
     <ContainerCart>
       <p>Carrinho</p>

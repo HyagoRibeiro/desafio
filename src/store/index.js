@@ -1,7 +1,9 @@
 import { createStore } from "redux";
 
+const products = JSON.parse(localStorage.getItem("productsList"));
+
 const INITIAL_STATE = {
-  data: [],
+  data: products ? products : [],
 };
 
 function cart(state = INITIAL_STATE, action) {
