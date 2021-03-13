@@ -10,11 +10,6 @@ function cart(state = INITIAL_STATE, action) {
       return { ...state, data: [...state.data, action.item] };
     case "SET_CURRENT_CART":
       return { ...state, data: [...action.products] };
-    case "REMOVE_PRODUCT":
-      return {
-        ...state,
-        data: [...state.data.filter((_, idx) => idx !== action.index)],
-      };
     default:
       return state;
   }

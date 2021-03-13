@@ -32,7 +32,12 @@ function Cart({ closeCart, currency }) {
       <ProductsGroup>
         {products.map((product, index) => {
           return (
-            <ProductCart index={index} product={product} currency={currency} />
+            <ProductCart
+              key={index}
+              index={index}
+              product={product}
+              currency={currency}
+            />
           );
         })}
       </ProductsGroup>

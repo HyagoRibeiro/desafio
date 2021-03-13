@@ -8,13 +8,6 @@ function Product({ product, currency, photo }) {
 
   const products = useSelector((state) => state.data);
 
-  const treatedData = {
-    brand: product.brand ?? "-",
-    hasStock: product.hasStock ?? "-",
-    name: product.name ?? "-",
-    price: product.price ?? "-",
-  };
-
   const addToCart = (item) => {
     dispatch({ type: "ADD_PRODUCT", item });
     localStorage.setItem("productsList", JSON.stringify([...products, item]));
@@ -26,11 +19,10 @@ function Product({ product, currency, photo }) {
         <Card>
           <Card.Img style={{ height: "auto" }} src={photo} />
           <Card.Body>
-            <Card.Title>{treatedData.name}</Card.Title>
-            <Card.Text>{treatedData.brand}</Card.Text>
-            <Card.Text>{treatedData.hasStock}</Card.Text>
+            <Card.Title>{product.name ?? "-"}</Card.Title>
+            <Card.Text>{product.brand ?? "-"}</Card.Text>
             <Card.Text>
-              {currency} {treatedData.price}
+              {currency} {product.price ?? "-"}
             </Card.Text>
             <Button variant="primary" onClick={() => addToCart(product)}>
               Comprar

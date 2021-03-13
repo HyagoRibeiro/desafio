@@ -9,12 +9,6 @@ function ProductCart({ product, currency, index }) {
 
   const products = useSelector((state) => state.data);
 
-  const treatedData = {
-    brand: product?.brand ?? "-",
-    name: product?.name ?? "-",
-    price: product?.price ?? "-",
-  };
-
   const removeFromCart = () => {
     const newListProducts = [...products.filter((_, idx) => idx !== index)];
     dispatch({ type: "SET_CURRENT_CART", products: newListProducts });
@@ -25,13 +19,13 @@ function ProductCart({ product, currency, index }) {
     <ContainerProductCart>
       <div>
         <TextProduct>
-          <strong>Produto:</strong> {treatedData.name}
+          <strong>Produto:</strong> {product.name ?? "-"}
         </TextProduct>
         <TextProduct>
-          <strong>Marca:</strong> {treatedData.brand}
+          <strong>Marca:</strong> {product.brand ?? "-"}
         </TextProduct>
         <TextProduct>
-          <strong>Valor:</strong> {currency} {treatedData.price}
+          <strong>Valor:</strong> {currency} {product.price ?? "-"}
         </TextProduct>
       </div>
       <div>

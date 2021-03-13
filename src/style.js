@@ -28,12 +28,6 @@ export const ContainerData = styled.div`
   padding: 10px;
 `;
 
-export const ContainerFilters = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 1rem;
-`;
-
 export const TitleNavBar = styled.h1`
   color: #fff;
   font-weight: 700;
@@ -54,23 +48,5 @@ export const ButtonCart = styled(Button)`
   transition: 0.15s;
   :hover& {
     box-shadow: 0px 0px 8px 0.5px rgba(0, 0, 0, 0.15);
-  }
-`;
-
-export const CheckBoxLabel = styled.label`
-  display: flex;
-  align-items: center;
-  font-weight: 500;
-  margin-top: 5px;
-  margin-bottom: 0;
-
-  &:first-of-type {
-    margin-top: 10px;
-  }
-
-  input {
-    margin-right: 10px;
-    height: 15px;
-    width: 15px;
   }
 `;

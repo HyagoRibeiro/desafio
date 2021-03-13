@@ -6,16 +6,15 @@ import { useDispatch } from "react-redux";
 import Product from "./components/Product/Product.js";
 import { Navbar } from "react-bootstrap";
 import Cart from "./components/Cart/Cart.js";
+import Filter from "./components/Filters/Filters.js";
 import { Basket2Fill } from "react-bootstrap-icons";
 
 import {
   Container,
   ContainerData,
-  ContainerFilters,
   ButtonCart,
   AlignContent,
   TitleNavBar,
-  CheckBoxLabel,
 } from "./style";
 
 function App() {
@@ -23,7 +22,7 @@ function App() {
   const [open, setOpen] = useState(false);
   const [data, setData] = useState({});
   const [filter, setFilter] = useState("allProducts");
-  const [filterCheckBox, setFilterCheckBox] = useState({});
+  const [filterCheckBox, setFilterCheckBox] = useState({ allValue: true });
   const dispatch = useDispatch();
 
   const filterItems = useMemo(() => {
@@ -59,7 +58,7 @@ function App() {
   useEffect(() => {
     const products = JSON.parse(localStorage.getItem("productsList")) || [];
     dispatch({ type: "SET_CURRENT_CART", products });
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     fetch("https://www.trinto.com.br/testes/frontendjr/index.php")
@@ -83,42 +82,12 @@ function App() {
         </Navbar.Brand>
       </Navbar>
       <AlignContent>
-        <ContainerFilters>
-          <select
-            value={filter}
-            onChange={({ target }) => setFilter(target.value)}
-          >
-            <option value="allProducts">Todos os produtos</option>
-            <option value="hasStock">Produtos em estoque</option>
-          </select>
-          <CheckBoxLabel>
-            <input
-              name="allValue"
-              type="checkbox"
-              checked={filterCheckBox.allValue}
-              onChange={handleCheckBoxChange}
-            />
-            Todos valores
-          </CheckBoxLabel>
-          <CheckBoxLabel>
-            <input
-              name="toFifty"
-              type="checkbox"
-              checked={filterCheckBox.toFifty}
-              onChange={handleCheckBoxChange}
-            />
-            Até 50,00
-          </CheckBoxLabel>
-          <CheckBoxLabel>
-            <input
-              name="fromHundred"
-              type="checkbox"
-              checked={filterCheckBox.fromHundred}
-              onChange={handleCheckBoxChange}
-            />
-            A partir de 100,00
-          </CheckBoxLabel>
-        </ContainerFilters>
+        <Filter
+          filter={filter}
+          setFilter={setFilter}
+          handleCheckBoxChange={handleCheckBoxChange}
+          filterCheckBox={filterCheckBox}
+        />
         <ContainerData>
           <ButtonCart onClick={() => setOpen(!open)}>
             <Basket2Fill color="#fff" size={30} />
