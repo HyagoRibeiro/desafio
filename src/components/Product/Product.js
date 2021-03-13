@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { ProductImage, ContainerProduct } from "./style";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import React from "react";
+import { ContainerProduct } from "./style";
+import { useDispatch, useSelector } from "react-redux";
+import { Card, Button } from "react-bootstrap";
 
 function Product({ product, currency, photo }) {
   const dispatch = useDispatch();
@@ -23,16 +23,20 @@ function Product({ product, currency, photo }) {
   return (
     <div>
       <ContainerProduct>
-        <ProductImage src={photo} />
-        <p>{treatedData.name}</p>
-        <p>{treatedData.brand}</p>
-        <p>{treatedData.hasStock}</p>
-        <p>
-          {currency} {treatedData.price}
-        </p>
-        <button type="button" onClick={() => addToCart(product)}>
-          Comprar
-        </button>
+        <Card>
+          <Card.Img style={{ height: "auto" }} src={photo} />
+          <Card.Body>
+            <Card.Title>{treatedData.name}</Card.Title>
+            <Card.Text>{treatedData.brand}</Card.Text>
+            <Card.Text>{treatedData.hasStock}</Card.Text>
+            <Card.Text>
+              {currency} {treatedData.price}
+            </Card.Text>
+            <Button variant="primary" onClick={() => addToCart(product)}>
+              Comprar
+            </Button>
+          </Card.Body>
+        </Card>
       </ContainerProduct>
     </div>
   );

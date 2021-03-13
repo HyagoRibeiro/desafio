@@ -1,11 +1,13 @@
-import React, { useMemo, useEffect } from "react";
+import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 
 import ProductCart from "../ProductCart/ProductCart.js";
 
-import { ContainerCart } from "./style";
+import { Button } from "react-bootstrap";
 
-function Cart() {
+import { ContainerCart, HeaderCart, TitleCart, ProductsGroup } from "./style";
+
+function Cart({ closeCart, currency }) {
   const products = useSelector((state) => state.data);
 
   const totalPrice = useMemo(() => {
@@ -16,12 +18,24 @@ function Cart() {
 
   return (
     <ContainerCart>
-      <p>Carrinho</p>
-      <p>{totalPrice}</p>
-      {console.log("DATA", products)}
-      {products.map((product) => {
-        return <ProductCart product={product} />;
-      })}
+      <HeaderCart>
+        <div>
+          <TitleCart>Carrinho</TitleCart>
+        </div>
+        <Button variant="secondary" onClick={closeCart}>
+          Close
+        </Button>
+      </HeaderCart>
+      <p>
+        <strong>Valor total: </strong> {currency} {totalPrice}
+      </p>
+      <ProductsGroup>
+        {products.map((product, index) => {
+          return (
+            <ProductCart index={index} product={product} currency={currency} />
+          );
+        })}
+      </ProductsGroup>
     </ContainerCart>
   );
 }

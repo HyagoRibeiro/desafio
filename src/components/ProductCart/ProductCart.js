@@ -1,36 +1,45 @@
-import React, { useState, useEffect } from "react";
-import { ProductImage, ContainerProduct } from "./style";
-import { useDispatch } from "react-redux";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Button } from "react-bootstrap";
 
-function ProductCart({ product, currency }) {
+import { ContainerProductCart, TextProduct } from "./style";
+
+function ProductCart({ product, currency, index }) {
   const dispatch = useDispatch();
 
-  const products = window.localStorage.getItem("productsList");
+  const products = useSelector((state) => state.data);
+
   const treatedData = {
     brand: product?.brand ?? "-",
     name: product?.name ?? "-",
     price: product?.price ?? "-",
   };
 
-  const removeToCart = (item) => {
-    dispatch({ type: "REMOVE_PRODUCT", item });
+  const removeFromCart = () => {
+    const newListProducts = [...products.filter((_, idx) => idx !== index)];
+    dispatch({ type: "SET_CURRENT_CART", products: newListProducts });
+    localStorage.setItem("productsList", JSON.stringify(newListProducts));
   };
 
-  useEffect(() => {
-    dispatch({ type: "SET_CURRENT_STATE", products });
-  }, []);
-
   return (
-    <div>
-      <p>{treatedData.name}</p>
-      <p>{treatedData.brand}</p>
-      <p>
-        {currency} {treatedData.price}
-      </p>
-      <button type="button" onClick={() => removeToCart(product)}>
-        Remover
-      </button>
-    </div>
+    <ContainerProductCart>
+      <div>
+        <TextProduct>
+          <strong>Produto:</strong> {treatedData.name}
+        </TextProduct>
+        <TextProduct>
+          <strong>Marca:</strong> {treatedData.brand}
+        </TextProduct>
+        <TextProduct>
+          <strong>Valor:</strong> {currency} {treatedData.price}
+        </TextProduct>
+      </div>
+      <div>
+        <Button variant="danger" onClick={() => removeFromCart()}>
+          Remover
+        </Button>
+      </div>
+    </ContainerProductCart>
   );
 }
 
